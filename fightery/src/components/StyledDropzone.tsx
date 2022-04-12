@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './StyledDropzone.css';
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import { motion } from 'framer-motion';
 
-const StyledDropzone = () => {
-    const [images, setImages] = React.useState([]);
+const StyledDropzone = (props:any) => {
+    const [images, setImages] = useState([]);
     const maxNumber = 16;
 
     const onChange = (
@@ -20,6 +20,14 @@ const StyledDropzone = () => {
         hidden: { opacity: 0 },
         visible: { opacity: 1 },
     }
+
+    useEffect(() => {
+        if (images.length > 0) {
+            props.enableFighteryOptions(true);
+        } else {
+            props.enableFighteryOptions(false);
+        }
+    })
 
     return (
     <motion.div className="StyledDropzone">
@@ -41,7 +49,7 @@ const StyledDropzone = () => {
             <div className="StyledDropzone__dropzone" {...dragProps} >
                 <div className="StyledDropzone__dropzone--info" onClick={onImageUpload}>
                     <div className="StyledDropzone__dropzone--droptext">
-                        <p className="tracking-wider opacity-60 rounded-sm p-1">Click or Drop New Contestants</p>
+                        <p className="tracking-wider opacity-60 rounded-sm p-1"><span className="hover:font-bold hover:opacity-100">Click</span> or Drop New Contestants</p>
                         <p className="tracking-wide text-lg">or</p>
                         <button className="tracking-wider opacity-60 hover:bg-error rounded-sm p-1" onClick={onImageRemoveAll}>Reset All Contestants</button>
                     </div>
@@ -49,9 +57,9 @@ const StyledDropzone = () => {
                 <div className="image-wrapper">
                     {imageList.map((image, index) => (
                         <motion.div initial="hidden" animate="visible" variants={variants} key={index} className="image-item__wrapper">
-                            <motion.img src={image.dataURL} className="image-item--image rounded-md shadow-2xl" alt="" width="256" />
+                            <motion.img src={image.dataURL} className="image-item--image shadow-2xl" alt="" width="256" />
                                 <div className="image-item__info">
-                                    <input className="image-item__info--name dark:text-black p-1 tracking-wider text-center rounded-sm" type="text" placeholder="Player Name" />
+                                    <input className="image-item__info--name dark:text-white dark:bg-[#4f5275] p-2 tracking-wider text-center" type="text" placeholder="Player Name" />
                                     <button className="image-item__info--remove tracking-wider hover:text-red-400 hover:opacity-100" tabIndex={-1} onClick={() => onImageRemove(index)}>Remove</button>
                                 </div>
                         </motion.div>

@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.App__logo {
+    font-family: 'Secular One', sans-serif;
+    padding: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+    user-select: none;
+}
+
+.App__logo span {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.06rem;;
+    padding: 20px;
+}
