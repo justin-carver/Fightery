@@ -1,105 +1,66 @@
-import { DropzoneFileUpload } from 'dropzone';
-import { useEffect, useState } from 'react';
-import Dropzone, {useDropzone} from 'react-dropzone';
-import styled from 'styled-components';
+import React from "react";
+import './StyledDropzone.css';
+import ImageUploading, { ImageListType } from "react-images-uploading";
+import { motion } from 'framer-motion';
 
-// Default stylization, will fix later.
-const getColor = (props:any) => {
-    if (props.isDragAccept) {
-        return '#00e676';
+const StyledDropzone = () => {
+    const [images, setImages] = React.useState([]);
+    const maxNumber = 16;
+
+    const onChange = (
+        imageList: ImageListType,
+        addUpdateIndex: number[] | undefined
+    ) => {
+        // data for submit
+        console.log(imageList, addUpdateIndex);
+        setImages(imageList as never[]);
+    };
+
+    const variants = {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1 },
     }
-    if (props.isDragReject) {
-        return '#ff1744';
-    }
-    if (props.isFocused) {
-        return '#2196f3';
-    }
-    return '#eeeeee';
-}
 
-const ThumbsContainer = styled.div`
-    display: 'flex';
-    flexDirection: 'row';
-    flexWrap: 'wrap';
-    marginTop: 16px;
-`;
-
-const Thumb = styled.div`
-        display: 'inline-flex';
-        borderRadius: 2px;
-        border: '1px solid #eaeaea';
-        marginBottom: 8px;
-        marginRight: 8px;
-        width: 128px;
-        height: 128px;
-        padding: 4px;
-        boxSizing: 'border-box';
-    `;
-
-const ThumbInner = styled.div`
-    display: 'flex';
-    minWidth: 0;
-    overflow: 'hidden;
-`;
-
-const ThumbnailImg = styled.div`
-    display: 'block';
-    width: 'auto';
-    height: '100%;
-`;
-
-const Container = styled.div`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border-width: 2px;
-    border-radius: 2px;
-    border-color: ${props => getColor(props)};
-    border-style: dashed;
-    background-color: #888;
-    color: #FFF;
-    outline: none;
-    transition: border .24s ease-in-out;
-`;
-
-const StyledDropzone= (props: any) => {
-
-    const [files, setFiles] = useState([File]);
-    
-    const thumbs = files.map(file => (
-        <Thumb key={file.name}>
-            <ThumbInner>
-            <ThumbnailImg />
-            </ThumbInner>
-        </Thumb>
-    ));
-  
-    useEffect(() => {
-        // Make sure to revoke the data uris to avoid memory leaks
-        files.forEach(file => URL.revokeObjectURL(file.preview));
-    }, [files]);
-
-    const {getRootProps, getInputProps} = useDropzone({
-        accept: 'image/*',
-        onDrop: acceptedFiles => {
-          setFiles(acceptedFiles.map(file => Object.assign(file, {
-            preview: URL.createObjectURL(file)
-          })));
-        }
-      });
-    
     return (
-        <div className="container">
-        <Container {...getRootProps({className: 'dropzone'})}>
-            <input {...getInputProps()} />
-            <p>Drag 'n' drop some headshots for the contestants here, or click for browser.</p>
-        </Container>
-        <ThumbsContainer>
-            {thumbs}
-        </ThumbsContainer>
-        </div>
+    <motion.div className="StyledDropzone">
+        <ImageUploading
+                multiple
+                value={images}
+                onChange={onChange}
+                maxNumber={maxNumber}>
+        {({
+            imageList,
+            onImageUpload,
+            onImageRemoveAll,
+            onImageUpdate,
+            onImageRemove,
+            isDragging,
+            dragProps
+        }) => (
+            // write your building UI
+            <div className="StyledDropzone__dropzone" {...dragProps} >
+                <div className="StyledDropzone__dropzone--info" onClick={onImageUpload}>
+                    <div className="StyledDropzone__dropzone--droptext">
+                        <p className="tracking-wider opacity-60 rounded-sm p-1">Click or Drop New Contestants</p>
+                        <p className="tracking-wide text-lg">or</p>
+                        <button className="tracking-wider opacity-60 hover:bg-error rounded-sm p-1" onClick={onImageRemoveAll}>Reset All Contestants</button>
+                    </div>
+                </div>
+                <div className="image-wrapper">
+                    {imageList.map((image, index) => (
+                        <motion.div initial="hidden" animate="visible" variants={variants} key={index} className="image-item__wrapper">
+                            <motion.img src={image.dataURL} className="image-item--image rounded-md shadow-2xl" alt="" width="256" />
+                                <div className="image-item__info">
+                                    <input className="image-item__info--name dark:text-black p-1 tracking-wider text-center rounded-sm" type="text" placeholder="Player Name" />
+                                    <button className="image-item__info--remove tracking-wider hover:text-red-400 hover:opacity-100" tabIndex={-1} onClick={() => onImageRemove(index)}>Remove</button>
+                                </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+            )}
+        </ImageUploading>
+        </motion.div>
     );
 }
 

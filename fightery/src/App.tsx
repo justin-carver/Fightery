@@ -3,7 +3,7 @@ import CreateTeam from './components/CreateTeam';
 
 function App() {
   return (
-    <div className='App flex flex-col items-center dark:text-white dark:bg-stone-700 min-h-screen'>
+    <div className='App flex flex-col items-center dark:text-white dark:bg-dark-mode-base min-h-screen'>
       <CreateTeam />
     </div>
   );

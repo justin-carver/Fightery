@@ -1,3 +1,11 @@
 .CreateTeam {
     font-family: 'Secular One', sans-serif;
 }
+
+.CreateTeam__subtitle {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.075rem;
+    padding: 2px;
+    opacity: 0.4;
+}

@@ -4,7 +4,15 @@ module.exports = {
   ],
   darkMode: 'media',
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'dark-mode-base' : '#272a41',
+        'dark-mode-second' : '#3E415C',
+        'accent' : '#FFD23F',
+        'error' : '#EE4266',
+        'blue-jeans' : '#00A6FB'
+      }
+    },
   },
   plugins: [],
 }
