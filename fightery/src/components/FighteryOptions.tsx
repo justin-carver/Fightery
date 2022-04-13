@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import './FighteryOptions.css';
 
 const FighteryOptions = (props:any) => {
-    const baseStyle = "FighteryOptions sm:max-w-xl md:max-w-6xl w-full bg-slate-100 dark:bg-dark-mode-second p-6 mt-10 rounded-md shadow-xl";
+    const baseStyle = "FighteryOptions sm:max-w-xl md:max-w-6xl w-full bg-slate-100 dark:bg-dark-mode-second p-6 rounded-md shadow-lg";
     return(
         <motion.div animate="visible" className={props.enableComponent ? baseStyle : baseStyle + ' disabledComponent'}>
             <h1 className='FighteryOptions__header uppercase text-4xl tracking-wide'>Customize the fight</h1>

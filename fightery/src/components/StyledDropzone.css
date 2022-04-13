@@ -1,27 +1,12 @@
-/* .StyledDropzone__dropzone {
+.StyledDropzone__dropzone--info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 128px;
-} */
-
-.StyledDropzone__dropzone {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    font-family: 'Roboto', sans-serif;
     margin-top: 20px;
     padding: 64px;
-    border: dashed 3px rgba(255, 255, 255, 0.45);
     cursor: alias;
-}
-
-.StyledDropzone__dropzone--info {
-    font-family: 'Roboto', sans-serif;
-    display: flex;
-    flex-direction: column;
     text-align: center;
-    align-items: center;
     padding: 15px;
 }
 
@@ -46,7 +31,9 @@
 }
 
 .image-item__wrapper {
+    z-index: 10;
     padding: 10px;
+    margin-top: 30px;
 }
 
 .image-item__info {
